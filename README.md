@@ -19,3 +19,13 @@ if not use modular css
 
 # Note :
      Change css file name to style.module.css
+
+# BEM (BLOCK ELEMENT MODIFIER)
+The following standard recommends to strt each class name by the module name or the project name example Project name : mywebapp then each
+class name of the element starts with mywebapp__yourname
+
+# React Inline Styles 
+function App() {
+ let styles  = {marginLeft:50px,color:"red"}
+  return <h1 style={styles} className={style.acs}>Hello world</h1>;
+}
