@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './css/HomePage.css';
+import './css/style.css';
 import first from './Img/First.jpg';
 import second from './Img/Second.png'
 import Logo from './Img/Logo.png';
@@ -41,7 +41,7 @@ function HomePage() {
         <Loader />
       ) : (
         <>
-          <nav>
+          <nav class="hp-nav">
             <img src={Logo} alt="" />
             <div>
               <button class="nav-fst-btn" onClick={toggleLogin}>Log In</button>
@@ -61,8 +61,8 @@ function HomePage() {
 
 function Loader() {
   return (
-    <div className="loader-container">
-      <div className="loader"></div>
+    <div className="home-page-loader-container">
+      <div className="hp-loader"></div>
     </div>
   );
 }

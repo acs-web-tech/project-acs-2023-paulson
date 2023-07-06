@@ -1,0 +1,36 @@
+<html>
+<style>
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+  }
+
+  .main {
+    display: flex;
+    height: 100%;
+  }
+
+  .first {
+    width: 200px;
+    background-color: red;
+    position: sticky;
+    left: 0;
+    top: 0;
+  }
+
+  .second {
+    flex-grow: 1;
+    background-color: blue;
+    overflow: auto;
+  }
+</style>
+
+<body>
+  <div class="main">
+    <div class="first"></div>
+    <div class="second"></div>
+  </div>
+</body>
+
+</html>
