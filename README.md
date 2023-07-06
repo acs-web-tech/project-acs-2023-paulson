@@ -17,3 +17,5 @@ root.render(<App />);
 This will prevent clashing of class names it act as a namespace and avoid using tag name selector which will give more problem in production 
 if not use modular css
 
+# Note :
+     Change css file name to style.module.css
