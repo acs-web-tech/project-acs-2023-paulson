@@ -25,7 +25,9 @@ The following standard recommends to strt each class name by the module name or 
 class name of the element starts with mywebapp__yourname
 
 # React Inline Styles 
+```
 function App() {
  let styles  = {marginLeft:50px,color:"red"}
   return <h1 style={styles} className={style.acs}>Hello world</h1>;
 }
+```
