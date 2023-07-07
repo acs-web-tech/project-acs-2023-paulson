@@ -36,7 +36,7 @@ function App() {
 create a seprate folder for nodejs app and update essentials follow the following. below code is just for an idea and recommandation 
 its not mandatory to follow it in an redundant manner
 
-React requires preflight request which mean react front will be considered as cross origin not same origin  /path will not point it to the same origin so to enable preflight request we use two header Access-Control-Allow-Origin,Access-Control-Allow-Origin
+React requires preflight request which mean react front will be considered as cross origin not same origin  /path will not point it to the same origin so to enable preflight request we use two header Access-Control-Allow-Origin,Access-Control-Allow-Header
 
 Learn more about http headers [Read more](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers) \
 Learn more about Preflight request [Read more](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) 
