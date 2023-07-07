@@ -39,7 +39,7 @@ its not mandatory to follow it in an redundant manner
 React requires preflight request which mean react front will be considered as cross origin not same origin  /path will not point it to the same origin so to enable preflight request we use two header Access-Control-Allow-Origin,Access-Control-Allow-Origin
 
 Learn more about http headers [Read more](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers) \
-Learn more about Preflight request [Read more](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) \
+Learn more about Preflight request [Read more](https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request) 
 ```
 Middleware function 
 app.use(function(req,res,next){
