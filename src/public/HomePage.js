@@ -122,6 +122,10 @@ function end() {
 }
 
 function LogIn({ toggleSignup, close }) {
+ let submitData = async()=>{
+   // the follwing node /login route should assign a session
+   let status = await(fecth("/login",{method:"post",headers:{"Accept":"application/json"}}))
+ }
   return (
     <div>
       <div className="login-box">
@@ -144,6 +148,7 @@ function LogIn({ toggleSignup, close }) {
 }
 
 function SignUp({ toggleLogin, close }) {
+  
   return (
     <div>
       <div className="signup-box">
