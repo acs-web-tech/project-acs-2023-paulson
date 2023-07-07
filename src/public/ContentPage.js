@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,createContext } from "react";
 import { MdOutlinePostAdd } from "react-icons/md";
 import { AiOutlineCopy } from "react-icons/ai";
 import { AiOutlineFormatPainter } from "react-icons/ai";
@@ -7,10 +7,25 @@ import { HiMenu } from "react-icons/hi";
 import Logo from './Img/Logo.png'
 import PS from './Img/penstand.png';
 import './css/style.css';
+import {redirect} from "react-router-dom"
 
 
 function ContentPage() {
+  let [logged,changeAuth] = useState({islogged:false})
+  let checkLoggedIn = async()=>{
+        let token = await (await fetch("http://localhost:yournodejsport/getaccesstoken")).json()
+        let validate = await (await fetch("http://localhost:yournodejsport/validatetoken")).json()
+        if(validate.isValid){
+          // send the state value to all the child components including the token if child component require any data from server
+          // it should send a fecth call to server with token to get it's data required server should validate the token and it should return the data
+          
+          changeAuth({islogged:true})
+        }else{
+          redirect("/")
+        }
+  }
   return (
+  
     <div>
       {MainCon()}
     </div>
