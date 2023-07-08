@@ -53,8 +53,9 @@ function HomePage() {
           {secondCon()}
           {end()}
         </>
-      )}
-    </div>
+      )
+      }
+    </div >
 
   )
 }
@@ -122,17 +123,13 @@ function end() {
 }
 
 function LogIn({ toggleSignup, close }) {
- let submitData = async()=>{
-   // the follwing node /login route should assign a session
-   let status = await(fecth("/login",{method:"post",headers:{"Accept":"application/json"}}))
- }
   return (
     <div>
       <div className="login-box">
         <p class="close" onClick={close}>x</p>
         <div class="form-hold">
           <h2>Login<br />Welcome back!</h2>
-          <form>
+          <form action='/login'>
             <input type="email" placeholder="Email" />
             <input type="password" placeholder="Password" />
             <p>
@@ -147,15 +144,15 @@ function LogIn({ toggleSignup, close }) {
   );
 }
 
+
 function SignUp({ toggleLogin, close }) {
-  
   return (
     <div>
       <div className="signup-box">
         <p class="close" onClick={close}>x</p>
         <div class="fomm-hold">
           <h2>Welcome!<br />Create New Account</h2>
-          <form>
+          <form action='/register'>
             <input type="text" placeholder="Username" />
             <input type="text" placeholder="Email" />
             <input type="password" placeholder="Password" />
@@ -169,5 +166,7 @@ function SignUp({ toggleLogin, close }) {
     </div>
   );
 }
+
+
 
 export default HomePage;

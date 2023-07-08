@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import HomePage from './public/HomePage';
 import ContentPage from './public/ContentPage';
+import EditingPage from './public/EditingPage';
 import reportWebVitals from './reportWebVitals';
 
 import {
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
   {
     path: '/content',
     element: <ContentPage />
+  },
+  {
+    path: '/edit',
+    element: <EditingPage />
   }
 ])
 

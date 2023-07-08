@@ -4,9 +4,11 @@ import { AiOutlineCopy } from "react-icons/ai";
 import { AiOutlineFormatPainter } from "react-icons/ai";
 import { AiOutlineSetting } from "react-icons/ai";
 import { HiMenu } from "react-icons/hi";
+import { MdDelete } from "react-icons/md";
 import Logo from './Img/Logo.png'
 import PS from './Img/penstand.png';
 import './css/style.css';
+import { Link } from "react-router-dom";
 
 
 function ContentPage() {
@@ -34,7 +36,7 @@ function MainCon() {
       <nav className="cp-nav">
         <div>
           <HiMenu size={30} className="menu-icon" onClick={handleMenuIconClick} />
-          <img src={Logo} alt="" />
+          <Link to="/"><img src={Logo} alt="" /></Link>
         </div>
         <button className="nav-btn">Sign Up</button>
         <div className="user-image-display"></div>
@@ -58,13 +60,14 @@ function MainCon() {
 
 
 function MenuBar({ activeMenu, handleMenuItemClick }) {
-
   return (
     <div>
       <div className="cp-newpost-btn-hldr">
-        <button>
-          <p>+</p> New Project
-        </button>
+        <Link to="/edit" class="cp-edit-link">
+          <button>
+            <p>+</p> New Project
+          </button>
+        </Link>
       </div>
       <div className="cp-menustrip">
         <div
@@ -97,12 +100,61 @@ function MenuBar({ activeMenu, handleMenuItemClick }) {
 }
 
 function PostBar() {
-  return (
-    <div className="cp-post-page-con">
-      {NoItems_Post()}
-    </div>
-  );
+  let i = 1;
+
+  if (i === 0) {
+    return (
+      <div className="cp-post-page-con">
+        {NoItems_Post()}
+      </div>
+    );
+  }
+  else if (i === 1) {
+    return (
+      <div className="cp-post-page-con">
+        {Posts_Holder()}
+      </div>
+    );
+  }
 }
+
+function Posts_Holder() {
+  return (
+    <div className="cp-post-hold">
+      {Items_Post()}
+      {Items_Post()}
+    </div>
+  )
+}
+
+function Items_Post() {
+  return (
+    <div className="cp-items-post">
+      <div className="cp-items-post-frnt">
+        <div className="cp-ip-head">
+          <h1>U</h1>
+        </div>
+        <div>
+          <p>Untitled</p>
+        </div>
+      </div>
+      <div className="cp-items-post-dlt">
+        <MdDelete className="cp-ip-dlt" size={25} />
+      </div>
+    </div>
+  )
+}
+
+function NoItems_Post() {
+  return (
+    <div className="cp-ni">
+      <img src={PS} alt="" />
+      <label>No Posts</label>
+      <p>Posts that you create will show up here</p>
+    </div>
+  )
+}
+
 
 function PageBar() {
   return (
@@ -146,16 +198,6 @@ function SettingBar() {
   )
 }
 
-function NoItems_Post() {
-  return (
-    <div className="cp-ni">
-      <img src={PS} alt="" />
-      <label>No Posts</label>
-      <p>Posts that you create will show up here</p>
-    </div>
-  )
-}
-
 function NoItems_Page() {
   return (
     <div className="cp-ni">
@@ -165,7 +207,6 @@ function NoItems_Page() {
     </div>
   )
 }
-
 
 
 export default ContentPage;

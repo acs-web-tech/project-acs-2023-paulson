@@ -1,36 +1,36 @@
+<!DOCTYPE html>
 <html>
-<style>
-  html,
-  body {
-    height: 100%;
-    margin: 0;
-  }
 
-  .main {
-    display: flex;
-    height: 100%;
-  }
+<head>
+  <title>Text Editor</title>
+  <style>
+    #toolbar {
+      padding: 10px;
+      background-color: #f2f2f2;
+    }
 
-  .first {
-    width: 200px;
-    background-color: red;
-    position: sticky;
-    left: 0;
-    top: 0;
-  }
-
-  .second {
-    flex-grow: 1;
-    background-color: blue;
-    overflow: auto;
-  }
-</style>
+    #editor {
+      height: 300px;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+  </style>
+</head>
 
 <body>
-  <div class="main">
-    <div class="first"></div>
-    <div class="second"></div>
+  <div id="toolbar">
+    <button onclick="formatText('bold')">Bold</button>
+    <button onclick="formatText('italic')">Italic</button>
+    <button onclick="formatText('underline')">Underline</button>
   </div>
+
+  <div id="editor" contenteditable="true"></div>
+
+  <script>
+    function formatText(command) {
+      document.execCommand(command, false, null);
+    }
+  </script>
 </body>
 
 </html>
