@@ -116,3 +116,4 @@ function LogIn({ toggleSignup, close }) {
   );
 }
 ```
+access the following url to reach the react app not the nodjs path http:localhost:3000
