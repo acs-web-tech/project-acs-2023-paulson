@@ -60,7 +60,7 @@ app.post("/getaccesstoken",(req,res)=>{
 app.post("/validateaccesstoken",(req,res)=>{
 // validate the access token with the session token and send a flag to the client the the token is valid
 })
-
+```
 ## Integrating REACT and NODE JS AS A SINGLE PAGE APPLICATION
 Node js :
 ```
