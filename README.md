@@ -60,4 +60,58 @@ app.post("/getaccesstoken",(req,res)=>{
 app.post("/validateaccesstoken",(req,res)=>{
 // validate the access token with the session token and send a flag to the client the the token is valid
 })
-``
+
+## Integrating REACT and NODE JS AS A SINGLE PAGE APPLICATION
+Node js :
+```
+app.use(function(req,res,next){
+// fallback
+   if(req.hostname != "your desigered host name"){
+      res.status(403).end("Pre flight requests with diffrent origin are not allowed")
+return;
+}
+    res.writeHead(200,{"Access-Control-Allow-Origin":"http://localhost:3000 or *",
+     "Access-Control-Allow-Origin":"content-type,accept.... or *"
+ })
+
+ app.post("/login",(req,res)=>{
+ res.end("hello")
+ })
+ app.listen(100,()=>{})
+```
+
+you can also use port 80 but not 3000 is becuase your react app will use that port
+the nodejs server will be running on [](http://localhost:100)
+
+##Your react app
+```
+npm start -> this will run your react at port 3000
+import {redirect} from "react-router-dom"
+function LogIn({ toggleSignup, close }) {
+  return (
+    <div>
+      <div className="login-box">
+        <p class="close" onClick={close}>x</p>
+        <div class="form-hold">
+          <h2>Login<br />Welcome back!</h2>
+          <form action='#' onSubmit={function(event){
+               event.preventDefault()
+               // e.text().e.blob(),e.json() -> can be used asper the data given by the server
+               let f = fetch("http://localhost/login",{method:"post"}).then(e=>e.text()).then((e)=>{
+               // do what ever you want by validating the data from the server
+               redirect("/your_browser_router_dashboard_route")
+               })
+          }}>
+            <input type="email" placeholder="Email" />
+            <input type="password" placeholder="Password" />
+            <p>
+              Don't have an account ?{' '}
+              <label onClick={toggleSignup}>Sign Up</label>
+            </p>
+            <button type="submit">Log In</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+}
