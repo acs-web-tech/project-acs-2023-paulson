@@ -97,7 +97,7 @@ function LogIn({ toggleSignup, close }) {
           <form action='#' onSubmit={function(event){
                event.preventDefault()
                // e.text().e.blob(),e.json() -> can be used asper the data given by the server
-               let f = fetch("http://localhost/login",{method:"post"}).then(e=>e.text()).then((e)=>{
+               let f = fetch("http://localhost:100/login",{method:"post"}).then(e=>e.text()).then((e)=>{
                // do what ever you want by validating the data from the server
                redirect("/your_browser_router_dashboard_route")
                })
