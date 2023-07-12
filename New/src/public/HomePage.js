@@ -4,7 +4,7 @@ import first from './Img/First.jpg';
 import second from './Img/Second.png'
 import Logo from './Img/Logo.png';
 import Full_Logo from './Img/Logo1.png';
-import { Link, redirect } from "react-router-dom";
+import { redirect } from "react-router-dom"
 
 
 
@@ -76,7 +76,7 @@ function firstCon() {
           <h1>Creating website is<br />easy with Us.<br />You can do it</h1>
         </div>
         <div class="first-con-button">
-          <Link to="/content"><button class="first-con-fst-btn">Start for free</button></Link>
+          <button class="first-con-fst-btn">Start for free</button>
         </div>
       </div>
       <div class="first-con-right">
@@ -146,6 +146,60 @@ function LogIn({ toggleSignup, close }) {
 
 
 function SignUp({ toggleLogin, close }) {
+
+  function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+
+  function isValidPassword(password) {
+    const passwordRegex = /^.{8,}$/;
+    return passwordRegex.test(password)
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault()
+
+    const name = event.target.childNodes[0].value;
+    const email = event.target.childNodes[1].value;
+    const password = event.target.childNodes[2].value;
+
+    if (isValidEmail(email) && isValidPassword(password)) {
+      const signin_val = {
+        name: name,
+        email: email,
+      }
+      signin_val.password = password
+
+
+      let f = fetch("http://localhost:100/signup", {
+        method: "post", body: JSON.stringify(signin_val), headers: {
+          "content-type": "application/json"
+        }
+      }).then((e) => {
+
+        redirect("/content")
+        //console.log(e.body.getReader())
+        /* 
+        e.body.getReader().read().then(function (user) {
+          console.log(user.value.buffer.toString())
+        })
+        */
+        // e.json().then(function (user) {
+        //   console.log(user)
+        // })
+      }).catch(error => { })
+    }
+    else {
+      if (!isValidEmail(email)) {
+        alert("Invalid Email, Enter a Proper Email \n Eg : example@gmail.com")
+      }
+      else if (!isValidPassword(password)) {
+        alert("Password must be above 8 Characters.")
+      }
+    }
+  }
+
   return (
     <div>
       <div className="signup-box">
@@ -153,41 +207,10 @@ function SignUp({ toggleLogin, close }) {
         <div class="fomm-hold">
           <h2>Welcome!<br />Create New Account</h2>
 
-          <form action='#' onSubmit={function (event) {
-            event.preventDefault()
-
-            const signin_val = {
-              name: event.target.childNodes[0].value,
-              email: event.target.childNodes[1].value,
-            }
-
-            signin_val.password = event.target.childNodes[2].value
-
-
-            let f = fetch("http://localhost:100/signup", {
-              method: "post", body: JSON.stringify(signin_val), headers: {
-
-                "content-type": "application/json"
-              }
-            }).then((e) => {
-              //console.log(e.body.getReader())
-              /* 
-              e.body.getReader().read().then(function (user) {
-                console.log(user.value.buffer.toString())
-              })
-              */
-              e.json().then(function (user) {
-                console.log(user)
-              })
-
-              return "user";
-            }).then(function (user) {
-              console.log(user)
-            })
-          }}>
-            <input type="text" placeholder="Username" />
-            <input type="text" placeholder="Email" />
-            <input type="password" placeholder="Password" />
+          <form action='#' onSubmit={handleSubmit}>
+            <input type="text" placeholder="Username" required />
+            <input type="text" placeholder="Email" required />
+            <input type="password" placeholder="Password" required />
             <p>
               Already have an account ? <label onClick={toggleLogin}>Log In</label>
             </p>
