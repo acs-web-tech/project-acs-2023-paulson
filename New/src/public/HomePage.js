@@ -41,10 +41,10 @@ function HomePage() {
         <Loader />
       ) : (
         <>
-          <nav class="hp-nav">
+          <nav className="hp-nav">
             <img src={Logo} alt="" />
             <div>
-              <button class="nav-fst-btn" onClick={toggleLogin}>Log In</button>
+              <button className="nav-fst-btn" onClick={toggleLogin}>Log In</button>
             </div>
           </nav>
           {showLogin && <LogIn toggleSignup={toggleSignup} close={close} />}
@@ -70,16 +70,16 @@ function Loader() {
 
 function firstCon() {
   return (
-    <div class="first-con">
-      <div class="first-con-left">
-        <div class="first-con-word">
+    <div className="first-con">
+      <div className="first-con-left">
+        <div className="first-con-word">
           <h1>Creating website is<br />easy with Us.<br />You can do it</h1>
         </div>
-        <div class="first-con-button">
-          <button class="first-con-fst-btn">Start for free</button>
+        <div className="first-con-button">
+          <button className="first-con-fst-btn">Start for free</button>
         </div>
       </div>
-      <div class="first-con-right">
+      <div className="first-con-right">
         <img src={first} alt="" />
       </div>
     </div>
@@ -88,11 +88,11 @@ function firstCon() {
 
 function secondCon() {
   return (
-    <div class="second-con">
-      <div class="second-con-left">
+    <div className="second-con">
+      <div className="second-con-left">
         <img src={second} alt="" />
       </div>
-      <div class="second-con-right">
+      <div className="second-con-right">
         <h1>Lorem Ipsum</h1>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut ligula tempus, consectetur nisi sed, blandit sem. Phasellus efficitur nisl viverra massa accumsan, id iaculis odio tincidunt. Duis lobortis neque id aliquet tristique. Vivamus ac blandit mauris, in eleifend ex. Phasellus porttitor malesuada tortor.</p>
       </div>
@@ -102,8 +102,8 @@ function secondCon() {
 
 function end() {
   return (
-    <div class="end-con">
-      <div class="end-log-con">
+    <div className="end-con">
+      <div className="end-log-con">
         <img src={Full_Logo} alt="" />
       </div>
       <div>
@@ -126,8 +126,8 @@ function LogIn({ toggleSignup, close }) {
   return (
     <div>
       <div className="login-box">
-        <p class="close" onClick={close}>x</p>
-        <div class="form-hold">
+        <p className="close" onClick={close}>x</p>
+        <div className="form-hold">
           <h2>Login<br />Welcome back!</h2>
           <form action='#'>
             <input type="email" placeholder="Email" />
@@ -203,8 +203,8 @@ function SignUp({ toggleLogin, close }) {
   return (
     <div>
       <div className="signup-box">
-        <p class="close" onClick={close}>x</p>
-        <div class="fomm-hold">
+        <p className="close" onClick={close}>x</p>
+        <div className="fomm-hold">
           <h2>Welcome!<br />Create New Account</h2>
 
           <form action='#' onSubmit={handleSubmit}>

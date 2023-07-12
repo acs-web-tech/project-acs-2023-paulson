@@ -2,6 +2,7 @@ const { sign } = require('crypto');
 const express = require('express');
 const fs = require('fs');
 const app = express();
+const mysqlCon = require('./connection.js')
 let bcrypt = require('bcrypt');
 
 
@@ -30,10 +31,16 @@ app.post('/signup', (req, res) => {
 
   bcrypt.hash(req.body.password, 10, function (hasherr, hash) {
     if (hasherr) return;
-    console.log("Name:", req.body.name);
-    console.log("Email:", req.body.email);
-    console.log("Hashed Password:", hash);
-    res.redirect("/loginpage");
+    mysqlCon.query(
+      `insert into user_details values('${req.body.name}','${req.body.email}','${hash}')`,
+      function (sqlerr, result, field) {
+        console.log(sqlerr);
+        if (sqlerr == undefined) {
+        } else {
+          res.end('Something went wrong');
+        }
+      }
+    );
   });
 });
 
