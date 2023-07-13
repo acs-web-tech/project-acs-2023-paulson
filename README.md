@@ -117,3 +117,8 @@ function LogIn({ toggleSignup, close }) {
 }
 ```
 access the following url to reach the react app not the nodjs path http:localhost:3000
+
+## Client Side Routing 
+Refer stackblitz [Read more](https://stackblitz.com/edit/stackblitz-starters-1ck7dj?file=src%2FApp.js)
+But we expect using loaders for parent path auth, you didn't understand the use of redirect function refer the following docs
+[Read more ](https://reactrouter.com/en/main/route/loader)
