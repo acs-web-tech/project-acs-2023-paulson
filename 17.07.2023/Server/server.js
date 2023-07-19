@@ -70,15 +70,43 @@ app.post('/signup', (req, res) => {
 })
 
 app.post('/login', (req, res) => {
-  const email_val = { email: req.body.email }
-  const sqlcmd = "select password from user_details where email=?"
-  con.query(sqlcmd, email_val, function (err, result) {
-    if (err) {
-      res.json({ message: 0 })
-    } else {
-      res.json({ message: 1 })
-    }
-  })
+  con.query(
+    `select email from user_details where email = '${req.body.email}'`,
+    function (err, result) {
+      if (result.length >= 1) {
+        res.json({ message: 1 })
+        const validation_email = result[0].email
+        con.query(
+          `select password from user_details where email= '${validation_email}'`,
+          function (error, pwdres) {
+            if (error) {
+              console.log(error);
+            } else {
+              const validation_pw = pwdres[0].password
+
+              bcrypt.compare(req.body.pass, validation_pw,
+                function (hasherr, match) {
+                  if (hasherr) {
+                    console.error(hasherr)
+                  } else {
+                    if (match) {
+                      console.log("Matched")
+
+                    } else {
+                      console.log("not matched")
+
+                    }
+                  }
+                }
+              )
+            }
+          }
+        )
+      } else {
+        res.json({ message: 0 })
+        console.log('Cannot Login')
+      }
+    })
 })
 
 app.listen(100, () => {

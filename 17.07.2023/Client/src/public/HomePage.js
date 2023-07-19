@@ -168,17 +168,16 @@ function LogIn({ toggleSignup, close }) {
       }).then(data => {
         return data.json();
       }).then(datas => {
-        if (!datas.message) {
-          console.log('wrongs')
+        if (datas.message === 0) {
+          console.log('Cannot Login')
+          alert('There is no Account, Create a New Account')
         } else {
-          console.log('success');
+          console.log('Can Login');
         }
       }).catch(err => {
         console.log(err);
       })
-
-      console.log("Valid Login");
-      close()
+      // close()
     } else {
       if (!isValidEmail(email)) {
         alert("Invalid Email, Enter a Proper Email \n Eg : example@gmail.com")
@@ -196,8 +195,8 @@ function LogIn({ toggleSignup, close }) {
         <div className="form-hold">
           <h2>Login<br />Welcome back!</h2>
           <form action='#' onSubmit={handleLogin}>
-            <input type="email" placeholder="Email" />
-            <input type="password" placeholder="Password" />
+            <input type="email" placeholder="Email" required />
+            <input type="password" placeholder="Password" required />
             <p>
               Don't have an account ?{' '}
               <label onClick={toggleSignup}>Sign Up</label>
