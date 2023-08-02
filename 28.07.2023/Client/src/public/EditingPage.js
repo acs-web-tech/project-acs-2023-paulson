@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+// Importing Section
+
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { BiArrowBack } from "react-icons/bi";
 import { AiFillSave } from "react-icons/ai";
@@ -11,20 +13,106 @@ import { BiRedo } from "react-icons/bi";
 import './css/edit.css'
 import Logo from './Img/Logo.png'
 
-export function Editing_Page() {
+// Displaying The User's First letter in Top-Right Circle
 
+let ReceivedLetter = "";
 
+const storedData = sessionStorage.getItem('userData');
+const userData = storedData ? JSON.parse(storedData) : null;
+
+if (userData !== null) {
+  ReceivedLetter = userData.email[0].toUpperCase();
+}
+
+// Main Function, Contain Nav and Connects all other Functions.
+
+function Editing_Page() {
+
+  const [value, setValue] = useState(null);
+  const [inputDisabled, setInputDisabled] = useState(false);
+  const [contentData, setContentData] = useState("");
+
+  // Code For Displaying The Contents in Text Editor, Executes When value is in Session Data.
+
+  let postTitle = sessionStorage.getItem('Title')
+
+  if (postTitle !== null) {
+
+    setValue(postTitle)
+    setInputDisabled(true)
+
+    let Email = userData.email;
+    let Title = { title: postTitle, email: Email }
+
+    // Connection with Node to send and recieve data.
+
+    fetch("http://localhost:100/sendCon", {
+      method: "POST",
+      body: JSON.stringify(Title),
+      headers: { "Content-type": "application/json" },
+    }).then(data => {
+      return data.json()
+    }).then(datas => {
+      //console.log()
+      const conVal = datas.content[0].content
+      setContentData(conVal)
+    })
+    sessionStorage.setItem('Title2', postTitle)
+    sessionStorage.removeItem('Title')
+  }
+
+  // Function to Save Post, Executes When Save Button is clicked, Stored in Gettitle function.
 
   const [inputValue, setInputValue] = useState('');
 
   const handleSaveText = () => {
-    const editor = document.getElementById('editor');
-    const title = inputValue;
-    const content = editor.innerText;
-    let a = { title: title, content: content }
-    console.log(a)
-  };
 
+    let sesTitle = sessionStorage.getItem('Title2');
+
+    if (sesTitle !== null) {
+      console.log(sesTitle);
+    } else {
+      console.log("Success");
+    }
+
+
+    const email = userData.email;
+    const title = inputValue;
+    const content = enteredText;
+    let a = { title: title, content: content, email: email }
+
+    // Connection With Node to Save the Post.
+
+    fetch("http://localhost:100/savepost", {
+      method: "POST",
+      body: JSON.stringify(a),
+      headers: { "Content-type": "application/json" },
+    }).then(data => {
+      return data.json()
+    }).then(datas => {
+      if (datas.message === 1) {
+        alert("Post Already Exist, Enter other Title Name")
+      }
+    })
+  }
+
+  // Function to Publish the post , Executes When Published Button is clicked, Stored in Gettitle function.
+
+  const handlePublishPost = () => {
+
+    const email = userData.email
+    const val = { value: value, email: email }
+
+    console.log(val)
+
+    // Connection with Node to Store the title in userPage Database...
+
+    fetch("http://localhost:100/savepage", {
+      method: "POST",
+      body: JSON.stringify(val),
+      headers: { "Content-type": "application/json" },
+    })
+  }
 
   return (
     <div className='ep'>
@@ -36,25 +124,35 @@ export function Editing_Page() {
             </div>
             <img src={Logo} alt="" />
           </div>
-          <div className='ep-nav-user-img'>
-          </div>
+          <button className='ep-nav-user-img'>
+            <p>{ReceivedLetter}</p>
+          </button>
         </nav>
-        <GetTitle handleSaveText={handleSaveText} inputValue={inputValue} setInputValue={setInputValue} />
+        <GetTitle handleSaveText={handleSaveText}
+          handlePublishPost={handlePublishPost}
+          setInputValue={setInputValue}
+          value={value}
+          inputDisabled={inputDisabled}
+        />
       </div>
-      {Edit_Menu()}
+      <EDIT_MENU contentData={contentData}
+      />
     </div>
   )
 }
 
-const GetTitle = ({ handleSaveText, inputValue, setInputValue }) => {
+// Menu That contains TextBox for Title and Save,Publish Button
+
+const GetTitle = ({ handleSaveText, setInputValue, value, inputDisabled, handlePublishPost }) => {
 
   return (
     <div className="ep-get-title">
       <input
         id='title'
         type="Text"
-        value={inputValue}
+        value={value}
         placeholder="Enter Title"
+        disabled={inputDisabled}
         onChange={(e) => setInputValue(e.target.value)}
       />
       <div className="ep-get-tit-btn-hlder">
@@ -62,7 +160,7 @@ const GetTitle = ({ handleSaveText, inputValue, setInputValue }) => {
           <AiFillSave size={20} className='icon-in-tit-btn' />
           Save
         </button>
-        <button className="ep-btn-hlder-snd">
+        <button className="ep-btn-hlder-snd" onClick={handlePublishPost}>
           <AiOutlineSend size={20} className='icon-in-tit-btn' />
           Publish
         </button>
@@ -71,19 +169,36 @@ const GetTitle = ({ handleSaveText, inputValue, setInputValue }) => {
   )
 }
 
+let enteredText = "Start typing here..."
 
+// Function For Editing Part 
 
-const Edit_Menu = () => {
+const EDIT_MENU = ({ contentData }) => {
 
   const [content, setContent] = useState("Start typing here...");
+  const [value, setValue] = useState(null)
+
+  // Setting the content came from parameter to the "value"
+
+  useEffect(() => {
+    if (contentData !== "") {
+      setValue(contentData)
+    }
+  }, [contentData])
+
+  // Storing the value in Editor in Variable( enteredText )
+
+  const handleInputChange = (event) => {
+    enteredText = event.target.value;
+  };
+
+  // Function to Change text format in Editor ( BOLD, ITALIC, UNDERLINE )
 
   const handleFormat = (command) => {
     document.execCommand(command, false, null);
   };
 
-  const handleContentChange = (event) => {
-    setContent(event.target.value);
-  };
+  // Function For Undo and Redo
 
   const handleUndo = () => {
     document.execCommand('undo', false, null);
@@ -92,6 +207,8 @@ const Edit_Menu = () => {
   const handleRedo = () => {
     document.execCommand('redo', false, null);
   };
+
+  // Design Return 
 
   return (
     <div className="ep-text-editor">
@@ -113,14 +230,20 @@ const Edit_Menu = () => {
         </button>
       </div>
 
-      <div
+      <textarea
         id="editor"
         contentEditable="true"
-        onInput={handleContentChange}
-        dangerouslySetInnerHTML={{ __html: content }}
+        placeholder={content}
+        value={value}
+        onInput={handleInputChange}
+        noChange={(event) => { console.log(event.target.value) }}
       />
     </div>
-  );
-};
+  )
+}
+
+function dialogBox({ message }) {
+  console.log(message)
+}
 
 export default Editing_Page;
