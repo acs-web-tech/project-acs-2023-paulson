@@ -78,7 +78,7 @@ function Editing_Page() {
 
     const email = userData.email;
     const title = inputValue;
-    const content = enteredText;
+    const content = "";
     let a = { title: title, content: content, email: email }
 
     // Connection With Node to Save the Post.
@@ -169,14 +169,13 @@ const GetTitle = ({ handleSaveText, setInputValue, value, inputDisabled, handleP
   )
 }
 
-let enteredText = "Start typing here..."
-
 // Function For Editing Part 
 
 const EDIT_MENU = ({ contentData }) => {
 
-  const [content, setContent] = useState("Start typing here...");
-  const [value, setValue] = useState(null)
+  const [enteredText, setEnteredText] = useState('');
+
+  const [value, setValue] = useState('')
 
   // Setting the content came from parameter to the "value"
 
@@ -189,7 +188,7 @@ const EDIT_MENU = ({ contentData }) => {
   // Storing the value in Editor in Variable( enteredText )
 
   const handleInputChange = (event) => {
-    enteredText = event.target.value;
+    setEnteredText(event.target.value)
   };
 
   // Function to Change text format in Editor ( BOLD, ITALIC, UNDERLINE )
@@ -233,10 +232,10 @@ const EDIT_MENU = ({ contentData }) => {
       <textarea
         id="editor"
         contentEditable="true"
-        placeholder={content}
-        value={value}
+        placeholder="Start Typing Here..."
+        value={value + enteredText}
         onInput={handleInputChange}
-        noChange={(event) => { console.log(event.target.value) }}
+      // onChange={(event) => setValue(event.target.value)}
       />
     </div>
   )
